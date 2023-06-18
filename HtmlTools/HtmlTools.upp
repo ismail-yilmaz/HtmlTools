@@ -1,0 +1,16 @@
+description "Html parser, santizer tools. (A libtidy wrapper for U++)\377";
+
+uses
+	Core;
+
+file
+	HtmlTools.h,
+	Node.cpp,
+	Parser.cpp,
+	Library readonly separator,
+	libtidy2upp.ext,
+	Info readonly separator,
+	Todo.txt,
+	Copying,
+	Docs readonly separator;
+
