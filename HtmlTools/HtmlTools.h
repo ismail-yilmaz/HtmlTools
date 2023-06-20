@@ -117,7 +117,6 @@ private:
 
 class TidyHtmlParser {
 public:
-    TidyHtmlParser();
     TidyHtmlParser(const String& html);
     virtual ~TidyHtmlParser();
     
@@ -176,8 +175,7 @@ public:
     Node        GetHead()                       { return { doc, tidyGetHead(doc) }; }
     Node        GetBody()                       { return { doc, tidyGetBody(doc) }; }
 
-    int         Parse();
-    int         Parse(const String& html);
+    int         Parse()                         { return tidyParseString(doc, ~htmlsource); }
     
     int         Repair(String& out);
     int         Repair(String& out, const String& html);
@@ -189,12 +187,14 @@ public:
     bool        HasErrors() const               { return GetErrorCount() > 0;   }
     
 private:
-    void    Init();
-    void    Destroy();
     
-    One<const char*> ptr;
-    TidyDoc      doc;
-    TidyBuffer   errors;
+    TidyDoc       doc;
+    TidyBuffer    errors;
+    const String& htmlsource;
+    
+private:
+    friend HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options);
+    friend String   RepairHtml(const String& html, const VectorMap<String, Value>& options);
 };
 
 HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options);

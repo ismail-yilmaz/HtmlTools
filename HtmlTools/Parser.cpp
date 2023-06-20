@@ -2,30 +2,17 @@
 
 namespace Upp {
 
-TidyHtmlParser::TidyHtmlParser()
-{
-	Init();
-}
-
 TidyHtmlParser::TidyHtmlParser(const String& html)
-{
-	Init();
-	ptr = MakeOne<const char*>(~html);
-}
-
-TidyHtmlParser::~TidyHtmlParser()
-{
-	Destroy();
-}
-
-void TidyHtmlParser::Init()
+: doc {0}
+, errors {0}
+, htmlsource(html)
 {
 	doc = tidyCreate();
 	tidyBufInit(&errors);
 	tidySetErrorBuffer(doc, &errors);
 }
 
-void TidyHtmlParser::Destroy()
+TidyHtmlParser::~TidyHtmlParser()
 {
 	tidyBufFree(&errors);
 	tidyRelease(doc);
@@ -66,49 +53,6 @@ TidyHtmlParser& TidyHtmlParser::SetOption(const String& id, const Value& value)
 		return SetOption(optid, value);
 	RLOG("Warning: Unrecognized option string: " << id);
 	return *this;
-}
-
-int TidyHtmlParser::Parse()
-{
-	ASSERT(ptr);
-	return tidyParseString(doc, *ptr);
-}
-
-int TidyHtmlParser::Parse(const String& html)
-{
-	return tidyParseString(doc, ~html);
-}
-
-int TidyHtmlParser::Repair(String& out)
-{
-	int rc = Parse();
-	if(rc >= 0) {
-		rc = tidyCleanAndRepair(doc);
-		if(rc >= 0) {
-			TidyBuffer q;
-			tidyBufInit(&q);
-			tidySaveBuffer(doc, &q);
-			out.Cat((const char*) q.bp, q.size);
-			tidyBufFree(&q);
-		}
-	}
-	return rc;
-}
-
-int TidyHtmlParser::Repair(String& out, const String& html)
-{
-	int rc = Parse(html);
-	if(rc >= 0) {
-		rc = tidyCleanAndRepair(doc);
-		if(rc >= 0) {
-			TidyBuffer q;
-			tidyBufInit(&q);
-			tidySaveBuffer(doc, &q);
-			out.Cat((const char*) q.bp, q.size);
-			tidyBufFree(&q);
-		}
-	}
-	return rc;
 }
 
 TidyHtmlParser::Node::Node(TidyDoc doc_, TidyNode node)
@@ -228,6 +172,19 @@ HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options)
 	return pick(n);
 }
 
+static bool sRepairHtml(String& out, TidyDoc& doc)
+{
+	int rc = tidyCleanAndRepair(doc);
+	if(rc > 0) {
+		TidyBuffer buf;
+		tidyBufInit(&buf);
+		tidySaveBuffer(doc, &buf);
+		out.Set((const char*) buf.bp, buf.size);
+		tidyBufFree(&buf);
+	}
+	return rc == 0;
+}
+
 String RepairHtml(const String& html, const VectorMap<String, Value>& options)
 {
 	TidyHtmlParser p(html);
@@ -236,6 +193,7 @@ String RepairHtml(const String& html, const VectorMap<String, Value>& options)
 		p.SetOption(q.key, q.value);
 	
 	String out;
-	return p.Repair(out) >= 0 ? out : String::GetVoid();
+	return p.Parse() > 0 && sRepairHtml(out, p.doc) ? out : String::GetVoid();
 }
+
 }
