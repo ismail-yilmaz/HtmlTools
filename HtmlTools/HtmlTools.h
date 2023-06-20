@@ -14,7 +14,6 @@ public:
         Root,
         DocType,
         Tag,
-        EmptyTag,
         Text,
         Decl,
         PI,
@@ -35,12 +34,10 @@ public:
     String          GetTag() const                             { return text; }
     bool            IsTag() const                              { return type == Type::Tag; }
     bool            IsTag(const char *tag) const               { return IsTag() && text == tag; }
-    bool            IsEmptyTag() const                         { return type == Type::EmptyTag; }
     bool            IsText() const                             { return type == Type::Text; }
 
     void            Clear()                                    { text.Clear(); attr.Clear(); node.Clear(); type = Type::Root; }
     void            CreateTag(const char *tag)                 { type = Type::Tag; text = tag; }
-    void            CreateEmtpyTag(const char *tag)            { type = Type::EmptyTag; text = tag; }
     void            CreateText(const String& txt)              { type = Type::Text; text = txt; }
     void            CreatePI(const String& pi)                 { type = Type::PI; text = pi; }
     void            CreateDecl(const String& decl)             { type = Type::Decl; text = decl; }
@@ -151,7 +148,9 @@ public:
             String   GetValue() const       { return { tidyAttrValue(self) }; }
             bool     IsEvent() const        { return tidyAttrIsEvent(self); }
             operator bool() const           { return (bool) self; }
-            
+
+	        Attr() = delete;
+	            
         private:
             Attr(TidyNode node_, TidyAttr attr_);
             TidyNode node;
@@ -161,6 +160,8 @@ public:
         Attr GetFirstAttr() const           { return { self, tidyAttrFirst(self) }; }
         bool HasAttrs() const               { return (bool) tidyAttrFirst(self); }
         
+        Node() = delete;
+
     private:
         Node(TidyDoc doc_, TidyNode node_);
         TidyDoc  doc;
@@ -176,9 +177,6 @@ public:
     Node        GetBody()                       { return { doc, tidyGetBody(doc) }; }
 
     int         Parse()                         { return tidyParseString(doc, ~htmlsource); }
-    
-    int         Repair(String& out);
-    int         Repair(String& out, const String& html);
     
     int         GetWarningCount() const         { return tidyWarningCount(doc); }
     bool        HasWarnings() const             { return GetWarningCount() > 0; }

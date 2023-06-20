@@ -16,5 +16,6 @@ file
 	Info readonly separator,
 	Todo.txt,
 	Copying,
-	Docs readonly separator;
+	Docs readonly separator,
+	src.tpp;
 

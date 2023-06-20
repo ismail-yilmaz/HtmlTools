@@ -137,7 +137,7 @@ static void sParseHtml(HtmlNode& tree, const TidyHtmlParser::Node& node)
 			n.CreateTag(s);
 			break;
 		case TidyNode_StartEnd:
-			n.CreateEmtpyTag(s);
+			n.CreateTag(s);
 			break;
 	    case TidyNode_Text:
 			CreateText(q);
