@@ -2,13 +2,11 @@
 
 A powerful yet easy to use [libtidy](https://github.com/htacg/tidy-html5) bindings for U++, providing html parser, sanitizer and pretty-printer tools. 
 
-
-*Note: This package is still a work-in-progress. Remember that all hell can break loose, and you may need to nuke it from the orbit.*
-
 ## Features
 - Seamless integration with U++
+- Statically built libtidy.
 - html5 parser.
-- html5 sanitizer.
+- html5 sanitizer & prettifier.
 
 ## Examples
 
