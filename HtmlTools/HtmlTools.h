@@ -171,10 +171,10 @@ public:
     TidyHtmlParser& SetOption(const TidyOptionId id, const Value& value);
     TidyHtmlParser& SetOption(const String& id, const Value& value);
 
-    Node        GetRoot()                       { return { doc, tidyGetRoot(doc) }; }
-    Node        GetHtml()                       { return { doc, tidyGetHtml(doc) }; }
-    Node        GetHead()                       { return { doc, tidyGetHead(doc) }; }
-    Node        GetBody()                       { return { doc, tidyGetBody(doc) }; }
+    Node        GetRoot() const                 { return { doc, tidyGetRoot(doc) }; }
+    Node        GetHtml() const                 { return { doc, tidyGetHtml(doc) }; }
+    Node        GetHead() const                 { return { doc, tidyGetHead(doc) }; }
+    Node        GetBody() const                 { return { doc, tidyGetBody(doc) }; }
 
     int         Parse()                         { return tidyParseString(doc, ~htmlsource); }
     
