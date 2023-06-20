@@ -3,6 +3,10 @@ description "Html parser, santizer tools. (A libtidy wrapper for U++)\377";
 uses
 	Core;
 
+options(CLANG) -Wno-incompatible-pointer-types-discards-qualifiers;
+
+options(CLANG) -Wno-overloaded-virtual;
+
 file
 	HtmlTools.h,
 	Node.cpp,

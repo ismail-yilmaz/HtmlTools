@@ -3,12 +3,11 @@ DONE:
 + Implemented TidyHtmlParser, TidyHtmlParser::Node classes for traversing the document tree.
 + Implemented HtmlParse and HtmlRepair convenience functions.
 + Added a minimal code example, parsing the legacy example.com.
-
++ Build on Windows (CLANG)
 TODO:
 - Enable U++'s memory managers in libtidy.
 - Add U++ callbacks for libtidy's message queue.
 - Refactor buffer allocation code.
 - Add Topic++ documentation.
 - Add more example code (both console & gui).
-- Test the Windows build.
 - Cosmetics.
