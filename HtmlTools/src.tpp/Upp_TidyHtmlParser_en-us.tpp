@@ -66,6 +66,13 @@ ere].&]
 [s2;%% Parses the input document.&]
 [s3; &]
 [s4; &]
+[s5;:Upp`:`:TidyHtmlParser`:`:GetTidyDoc`(`)const: TidyDoc [* GetTidyDoc]() 
+[@(0.0.255) const]&]
+[s2;%% Returns a handle to the [^https`:`/`/api`.html`-tidy`.org`/tidy`/tidylib`_api`_5`.6`.0`/group`_`_Opaque`.html`#structTidyDoc^ T
+idyDoc]. This is useful for extending the functionality of the 
+parser. Client code [/ must not] manually free the handle.&]
+[s3; &]
+[s4; &]
 [s5;:Upp`:`:TidyHtmlParser`:`:GetWarningCount`(`)const: [@(0.0.255) int] 
 [* GetWarningCount]() [@(0.0.255) const]&]
 [s2;%% Returns the number of warnings.&]

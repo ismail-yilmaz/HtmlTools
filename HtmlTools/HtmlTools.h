@@ -149,8 +149,8 @@ public:
             bool     IsEvent() const        { return tidyAttrIsEvent(self); }
             operator bool() const           { return (bool) self; }
 
-	        Attr() = delete;
-	            
+            Attr() = delete;
+                
         private:
             Attr(TidyNode node_, TidyAttr attr_);
             TidyNode node;
@@ -177,7 +177,8 @@ public:
     Node        GetBody() const                 { return { doc, tidyGetBody(doc) }; }
 
     int         Parse()                         { return tidyParseString(doc, ~htmlsource); }
-    
+
+    TidyDoc     GetTidyDoc() const              { return doc; }
     int         GetWarningCount() const         { return tidyWarningCount(doc); }
     bool        HasWarnings() const             { return GetWarningCount() > 0; }
  
@@ -189,10 +190,6 @@ private:
     TidyDoc       doc;
     TidyBuffer    errors;
     const String& htmlsource;
-    
-private:
-    friend HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options);
-    friend String   RepairHtml(const String& html, const VectorMap<String, Value>& options);
 };
 
 HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options);

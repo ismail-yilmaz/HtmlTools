@@ -172,28 +172,24 @@ HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options)
 	return pick(n);
 }
 
-static bool sRepairHtml(String& out, TidyDoc& doc)
-{
-	int rc = tidyCleanAndRepair(doc);
-	if(rc > 0) {
-		TidyBuffer buf;
-		tidyBufInit(&buf);
-		tidySaveBuffer(doc, &buf);
-		out.Set((const char*) buf.bp, buf.size);
-		tidyBufFree(&buf);
-	}
-	return rc == 0;
-}
-
 String RepairHtml(const String& html, const VectorMap<String, Value>& options)
 {
 	TidyHtmlParser p(html);
 
 	for(const auto& q : ~options)
 		p.SetOption(q.key, q.value);
+
+	if(p.Parse() > 0 && tidyCleanAndRepair(p.GetTidyDoc()) > 0) {
+		String out;
+		TidyBuffer buf;
+		tidyBufInit(&buf);
+		tidySaveBuffer(p.GetTidyDoc(), &buf);
+		out.Set((const char*) buf.bp, buf.size);
+		tidyBufFree(&buf);
+		return out;
+	}
 	
-	String out;
-	return p.Parse() > 0 && sRepairHtml(out, p.doc) ? out : String::GetVoid();
+	return String::GetVoid();
 }
 
 }
