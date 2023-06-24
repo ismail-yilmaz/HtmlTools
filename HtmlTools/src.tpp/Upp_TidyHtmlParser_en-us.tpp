@@ -24,9 +24,9 @@ r]([@(0.0.255) const] String[@(0.0.255) `&] [*@3 html])&]
 [s3; &]
 [ {{10000F(128)G(128)@1 [s0;%% [* Public Method List]]}}&]
 [s3; &]
-[s5;:Upp`:`:TidyHtmlParser`:`:SetOption`(const TidyOptionId`,const Upp`:`:Value`&`): T
-idyHtmlParser[@(0.0.255) `&] [* SetOption]([@(0.0.255) const] TidyOptionId 
-[*@3 id], [@(0.0.255) const] Value[@(0.0.255) `&] [*@3 value])&]
+[s5;:Upp`:`:TidyHtmlParser`:`:SetOption`(TidyOptionId`,const Upp`:`:Value`&`): TidyHt
+mlParser[@(0.0.255) `&] [* SetOption](TidyOptionId [*@3 id], [@(0.0.255) const] 
+Value[@(0.0.255) `&] [*@3 value])&]
 [s5;:Upp`:`:TidyHtmlParser`:`:SetOption`(const Upp`:`:String`&`,const Upp`:`:Value`&`): T
 idyHtmlParser[@(0.0.255) `&] [* SetOption]([@(0.0.255) const] String[@(0.0.255) `&] 
 [*@3 id], [@(0.0.255) const] Value[@(0.0.255) `&] [*@3 value])&]
@@ -199,7 +199,14 @@ document.&]
 [@(0.0.255) bool]() [@(0.0.255) const]&]
 [s2;%% Returns true if the Node instance is a valid object.&]
 [s3; &]
-[s0; &]
+[s4; &]
+[s5;:Upp`:`:TidyHtmlParser`:`:Node`:`:ToHtmlNode`(`)const: HtmlNode 
+[* ToHtmlNode]() [@(0.0.255) const]&]
+[s5;:Upp`:`:TidyHtmlParser`:`:Node`:`:operator Upp`:`:HtmlNode`(`)const: operator 
+HtmlNode() [@(0.0.255) const]&]
+[s2;%%  Converts the Node object to [^topic`:`/`/HtmlTools`/src`/Upp`_HtmlNode`_en`-us`#Upp`:`:HtmlNode^ H
+tmlNode] object.&]
+[s3; &]
 [ {{10000>32;@(113.42.0) [s0;%% [*@7;4 Attribute]]}}&]
 [s3; &]
 [s1;:Upp`:`:TidyHtmlParser`:`:Node`:`:Attr: [@(0.0.255)3 class ][*3 TidyHtmlParser`::Node`:

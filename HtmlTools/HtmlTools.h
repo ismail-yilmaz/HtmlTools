@@ -144,8 +144,8 @@ public:
             
         public:
             Attr     GetNext() const        { return { node, tidyAttrNext(self) }; }
-            String   GetKey() const         { return { tidyAttrName(self) };  }
-            String   GetValue() const       { return { tidyAttrValue(self) }; }
+            String   GetKey() const         { return tidyAttrName(self); }
+            String   GetValue() const       { return tidyAttrValue(self); }
             bool     IsEvent() const        { return tidyAttrIsEvent(self); }
             operator bool() const           { return (bool) self; }
 
@@ -157,8 +157,11 @@ public:
             TidyAttr self;
         };
     
-        Attr GetFirstAttr() const           { return { self, tidyAttrFirst(self) }; }
-        bool HasAttrs() const               { return (bool) tidyAttrFirst(self); }
+        Attr		GetFirstAttr() const    { return { self, tidyAttrFirst(self) }; }
+        bool		HasAttrs() const        { return (bool) tidyAttrFirst(self); }
+        
+        HtmlNode	ToHtmlNode() const;
+        operator    HtmlNode() const		{ return ToHtmlNode(); }
         
         Node() = delete;
 
@@ -168,7 +171,7 @@ public:
         TidyNode self;
     };
 
-    TidyHtmlParser& SetOption(const TidyOptionId id, const Value& value);
+    TidyHtmlParser& SetOption(TidyOptionId id, const Value& value);
     TidyHtmlParser& SetOption(const String& id, const Value& value);
 
     Node        GetRoot() const                 { return { doc, tidyGetRoot(doc) }; }
@@ -179,6 +182,7 @@ public:
     int         Parse()                         { return tidyParseString(doc, ~htmlsource); }
 
     TidyDoc     GetTidyDoc() const              { return doc; }
+
     int         GetWarningCount() const         { return tidyWarningCount(doc); }
     bool        HasWarnings() const             { return GetWarningCount() > 0; }
  

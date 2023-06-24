@@ -87,7 +87,7 @@ String TidyHtmlParser::Node::GetValue() const
     return s;
 }
 
-static void sParseHtml(HtmlNode& tree, const TidyHtmlParser::Node& node)
+static void sToHtmlNode(HtmlNode& tree, const TidyHtmlParser::Node& node)
 {
 	for(auto q = node.GetChild(); q; q = q.GetNext()) {
 		TidyNodeType t = q.GetType();
@@ -155,8 +155,15 @@ static void sParseHtml(HtmlNode& tree, const TidyHtmlParser::Node& node)
 			}
 		}
 
-		sParseHtml(n, q);
+		sToHtmlNode(n, q);
 	}
+}
+
+HtmlNode TidyHtmlParser::Node::ToHtmlNode() const
+{
+	HtmlNode n;
+	sToHtmlNode(n, *this);
+	return n;
 }
 
 HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options)
@@ -168,7 +175,7 @@ HtmlNode ParseHtml(const String& html, const VectorMap<String, Value>& options)
 		p.SetOption(q.key, q.value);
 
 	p.Parse();
-	sParseHtml(n, p.GetRoot());
+	sToHtmlNode(n, p.GetRoot());
 	return pick(n);
 }
 
