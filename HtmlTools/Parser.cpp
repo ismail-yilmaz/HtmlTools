@@ -55,6 +55,14 @@ TidyHtmlParser& TidyHtmlParser::SetOption(const String& id, const Value& value)
 	return *this;
 }
 
+int TidyHtmlParser::Parse()
+{
+#ifdef UPP_HEAP
+	MemoryIgnoreLeaksBlock __;
+#endif
+	return tidyParseString(doc, ~htmlsource);
+}
+
 TidyHtmlParser::Node::Node(TidyDoc doc_, TidyNode node)
 : doc(doc_)
 , self(node)

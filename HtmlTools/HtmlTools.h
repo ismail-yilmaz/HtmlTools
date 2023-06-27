@@ -179,7 +179,7 @@ public:
     Node        GetHead() const                 { return { doc, tidyGetHead(doc) }; }
     Node        GetBody() const                 { return { doc, tidyGetBody(doc) }; }
 
-    int         Parse()                         { return tidyParseString(doc, ~htmlsource); }
+    int         Parse();
 
     TidyDoc     GetTidyDoc() const              { return doc; }
 
