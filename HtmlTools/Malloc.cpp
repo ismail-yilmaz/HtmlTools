@@ -2,7 +2,7 @@
 
 namespace Upp {
 	
-#define MLOG(x)    LOG(x)
+#define MLOG(x) //  LOG(x)
 
 #ifdef UPP_HEAP
 
