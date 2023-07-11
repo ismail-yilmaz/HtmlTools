@@ -78,6 +78,7 @@ public:
     HtmlNode&       SetAttr(const char *id, const String& val);
     int             AttrInt(const char *id, int def = Null) const;
     HtmlNode&       SetAttr(const char *id, int val);
+    int             FindAttr(const char *id)  const            { return attr ? attr->Find(id) : -1; }
     bool            HasAttrs() const                           { return (bool) GetAttrCount(); }
 
     void            SetAttrs(VectorMap<String, String>&& a);
