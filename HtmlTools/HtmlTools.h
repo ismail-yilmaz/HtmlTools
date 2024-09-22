@@ -8,7 +8,7 @@
 
 namespace Upp {
 
-class HtmlNode : Moveable< HtmlNode, DeepCopyOption<HtmlNode> > {
+class HtmlNode : Moveable<HtmlNode>, DeepCopyOption<HtmlNode> {
 public:
     enum class Type {
         Root,
